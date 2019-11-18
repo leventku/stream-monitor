@@ -1,0 +1,36 @@
+{
+  "name": "react-custom-boilerplate",
+  "version": "0.0.1",
+  "description": "Coding challenge",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "parcel pub/index.html"
+  },
+  "keywords": [],
+  "author": "Levent Kucukgorkey <levent.kucukgorkey@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/plugin-proposal-class-properties": "^7.7.0",
+    "@babel/plugin-transform-runtime": "^7.6.2",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-react": "^7.0.0",
+    "babel-jest": "^24.8.0",
+    "jest": "^24.8.0",
+    "jest-transform-stub": "^2.0.0",
+    "parcel-bundler": "^1.12.4",
+    "react-test-renderer": "^16.8.6"
+  },
+  "dependencies": {
+    "babel-jest": "^24.8.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest",
+      ".+\\.(svg|png|jpg)$": "jest-transform-stub"
+    }
+  }
+}
