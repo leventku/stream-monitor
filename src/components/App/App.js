@@ -1,13 +1,13 @@
-import React, { Component, Fragment } from 'react';
+import React from 'react';
+import StreamProvider from '../../providers/StreamProvider';
+import StreamMonitor from '../StreamMonitor';
 
-class App extends Component {
-	render () {
-		return (
-			<Fragment>
-				Done!
-			</Fragment>
-		);
-	}
+const App = () => {
+	return (
+		<StreamProvider>
+			<StreamMonitor></StreamMonitor>
+		</StreamProvider>
+	);
 }
 
 export default App;
