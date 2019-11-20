@@ -1,0 +1,1 @@
+export const localeOptions = { day: '2-digit', year: '2-digit', month: 'short' };

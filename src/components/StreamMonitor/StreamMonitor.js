@@ -11,7 +11,7 @@ const StreamMonitor = props => {
 	
 	const getMoreData = (page) => {
 		return getWithPageNumber(page).then((newData) => {
-			if (newData.length) {
+			if (newData) {
 				setData(prevData => [...prevData, ...newData]);
 				context.setNextPage();
 			}
