@@ -1,5 +1,5 @@
 import React from 'react';
-import StreamProvider from '../../providers/StreamProvider';
+import {StreamProvider} from '../../contexts/StreamContext'
 import StreamMonitor from '../StreamMonitor';
 
 const App = () => {

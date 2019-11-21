@@ -3,17 +3,17 @@ import SortableList from '../SortableList'
 
 import {getWithPageNumber} from '../../services/transactions';
 
-import StreamContext from '../../contexts/StreamContext';
+import {useStreamDispatch} from '../../contexts/StreamContext';
 
 const StreamMonitor = props => {
 	const [data, setData] = useState([]);
-	const context = useContext(StreamContext);
+	const dispatch = useStreamDispatch()
 	
 	const getMoreData = (page) => {
 		return getWithPageNumber(page).then((newData) => {
 			if (newData) {
 				setData(prevData => [...prevData, ...newData]);
-				context.setNextPage();
+				dispatch({type: 'pageIncrement'})
 			}
 		})
 	}

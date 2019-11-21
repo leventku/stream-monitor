@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 
 import styled from 'styled-components';
 
-import StreamContext from '../../contexts/StreamContext';
+import {useStreamDispatch} from '../../contexts/StreamContext';
 
 const Select = styled.select`
 	appearance: none;
@@ -26,10 +26,10 @@ const DropdownHolder = styled.div`
 	}
 `;
 const Dropdown = props => {
-	const context = useContext(StreamContext)
+	const dispatch = useStreamDispatch()
 	return (
 		<DropdownHolder>
-			<Select defaultValue="default" onChange={(e) => {context.setOrder(e.currentTarget.value)}}>
+			<Select defaultValue="default" onChange={(e) => {dispatch({type: 'sortOrderChange', payload: e.currentTarget.value})}}>
 				<option value="default" disabled>{props.children}</option>
 				{props.options.map(val => (
 					<option key={val} value={val}>{val[0].toUpperCase() + val.substr(1)}</option>

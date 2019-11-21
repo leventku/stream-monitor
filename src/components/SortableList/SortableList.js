@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import styled from 'styled-components';
 
-import StreamContext from '../../contexts/StreamContext';
+import {useStreamState} from '../../contexts/StreamContext';
 import {localeOptions} from '../../constants';
 
 import ListHeader from './ListHeader'
@@ -26,6 +26,10 @@ const statusHash = {
 	PRE_AUTHORIZED: {label: 'Pre-authorized', color: '#3399aa', order: 4},
 	PRE_AUTHORIZED_CANCELLED: {label: 'Cancelled (Auth)', color: '#cc3333', order: 5},
 }
+
+const Wrapper = styled.div`
+	max-width: 800px;
+`;
 
 const ListBody = styled.div`
 	height: calc(100vh - 76px);
@@ -69,12 +73,12 @@ const ItemStatus = styled.span`
 
 
 const SortableList = ({listItems, getMoreData}) => {
-	const context = React.useContext(StreamContext)
+	const {sortOrder, lastRevealedPage} = useStreamState();
 	const sortedList = JSON.parse(JSON.stringify(listItems))
-	if (context.sortOrder === 'date') {
+	if (sortOrder === 'date') {
 		sortedList.sort((a, b) => new Date(a.fromDate) - new Date(b.fromDate))
 	}
-	if (context.sortOrder === 'status') {
+	if (sortOrder === 'status') {
 		sortedList.sort((a, b) => (
 			(statusHash[a.status].order < statusHash[b.status].order) 
 			? -1
@@ -84,7 +88,7 @@ const SortableList = ({listItems, getMoreData}) => {
 		))
 	}
 	return (
-		<>
+		<Wrapper>
 			<ListHeader></ListHeader>
 			<ListBody>
 				{sortedList.map(item => 
@@ -99,10 +103,10 @@ const SortableList = ({listItems, getMoreData}) => {
 					</ListElement>
 				)}
 				<Button onClick={() => {
-					getMoreData(context.lastRevealedPage + 1)
+					getMoreData(lastRevealedPage + 1)
 				}}>Load More</Button>
 			</ListBody>
-		</>
+		</Wrapper>
 	)
 };
 
