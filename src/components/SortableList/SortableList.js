@@ -73,7 +73,7 @@ const ItemStatus = styled.span`
 
 
 const SortableList = ({listItems, getMoreData}) => {
-	const {sortOrder, lastRevealedPage} = useStreamState();
+	const {sortOrder, lastRevealedPage, dataLoading} = useStreamState();
 	const sortedList = JSON.parse(JSON.stringify(listItems))
 	if (sortOrder === 'date') {
 		sortedList.sort((a, b) => new Date(a.fromDate) - new Date(b.fromDate))
@@ -102,7 +102,7 @@ const SortableList = ({listItems, getMoreData}) => {
 						<ItemStatus status={item.status}>{statusHash[item.status].label}</ItemStatus>
 					</ListElement>
 				)}
-				<Button onClick={() => {
+				<Button disabled={dataLoading} onClick={() => {
 					getMoreData(lastRevealedPage + 1)
 				}}>Load More</Button>
 			</ListBody>

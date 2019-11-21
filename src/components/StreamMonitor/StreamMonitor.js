@@ -10,12 +10,15 @@ const StreamMonitor = props => {
 	const dispatch = useStreamDispatch()
 	
 	const getMoreData = (page) => {
-		return getWithPageNumber(page).then((newData) => {
-			if (newData) {
-				setData(prevData => [...prevData, ...newData]);
-				dispatch({type: 'pageIncrement'})
-			}
-		})
+		dispatch({type: 'dataRequested'})
+		return getWithPageNumber(page, () => {dispatch({type: 'dataFinished'})})
+			.then((newData) => {
+				if (newData) {
+					setData(prevData => [...prevData, ...newData]);
+					dispatch({type: 'dataArrived', payload: newData})
+					dispatch({type: 'pageIncrement'})
+				}
+			})
 	}
 
 	useEffect(() => {

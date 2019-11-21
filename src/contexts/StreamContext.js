@@ -11,6 +11,15 @@ function streamReducer(state, action) {
         case 'sortOrderChange': {
             return {...state, sortOrder: action.payload}
         }
+        case 'dataRequested': {
+            return {...state, dataLoading: true }
+        }
+        case 'dataFinished': {
+            return {...state, dataLoading: false }
+        }
+        case 'dataArrived': {
+            return {...state, latestData: action.payload, dataLoading: false}
+        }
         default: {
             throw new Error(`Unhandled action type: ${action.type}`)
         }
@@ -18,7 +27,7 @@ function streamReducer(state, action) {
 }
 
 function StreamProvider({children}) {
-    const [state, dispatch] = React.useReducer(streamReducer, {lastRevealedPage: -1, sortOrder: ''})
+    const [state, dispatch] = React.useReducer(streamReducer, {lastRevealedPage: -1, sortOrder: '', dataLoading: false, latestData: []})
     return (
         <StreamStateContext.Provider value={state}>
             <StreamDispatchContext.Provider value={dispatch}>
