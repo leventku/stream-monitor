@@ -4,7 +4,7 @@
       "es6": true,
       "browser": true
     },
-    "plugins": ["react"],
+    "plugins": ["react", "react-hooks"],
     "rules": {
       "indent": [
         "warn",
@@ -42,7 +42,7 @@
       "keyword-spacing": ["warn", { "before": true, "after": true }],
       "no-nested-ternary": "warn",
       "arrow-parens": ["off", "always"],
-  
+
       "no-else-return": "warn",
       "prefer-const": "warn",
       "no-multi-spaces": "warn",
@@ -57,7 +57,7 @@
       "no-undefined": "warn",
       "no-lonely-if": "warn",
       "no-var": "warn",
-  
+
       "comma-spacing": ["warn", { "before": false, "after": true }],
       "no-extra-semi": "warn",
       "jsx-quotes": ["warn", "prefer-double"],
@@ -75,7 +75,7 @@
       "prefer-template": "warn",
       "no-unused-vars": "warn",
       "eol-last": ["warn", "always"],
-  
+
       "react/prefer-stateless-function": ["warn", { "ignorePureComponents": true }],
       "react/jsx-uses-vars": "warn",
       "react/jsx-uses-react": "warn",
@@ -83,6 +83,8 @@
       "react/jsx-indent-props": ["warn", 2],
       "react/jsx-wrap-multilines": "warn",
       "react/no-typos": "warn",
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "error",
       "react/jsx-tag-spacing": [
         "warn",
         {
@@ -94,4 +96,3 @@
       ]
     }
   }
-  

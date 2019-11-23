@@ -1,19 +1,19 @@
-import React, { useContext, useEffect, useState } from 'react';
-import SortableList from '../SortableList'
+import React, { useEffect } from 'react';
+import SortableList from '../SortableList';
 
-import {useStreamDispatch, useStreamState, getWithPageNumber} from '../../contexts/StreamContext';
+import { useStreamDispatch, useStreamState, getWithPageNumber } from '../../contexts/StreamContext';
 
-const StreamMonitor = props => {
-	const {latestData} = useStreamState()
-	const dispatch = useStreamDispatch()
-	
-	const getMoreData = page => getWithPageNumber(dispatch, page)
+const StreamMonitor = () => {
+  const { latestData } = useStreamState();
+  const dispatch = useStreamDispatch();
 
-	useEffect(() => {
-		getMoreData(0)
-	}, [])
-	
-	return <SortableList listItems={latestData} getMoreData={getMoreData}></SortableList>
-}
+  const getMoreData = page => getWithPageNumber(dispatch, page);
+
+  useEffect(() => {
+    getWithPageNumber(dispatch, 0);
+  }, [dispatch]);
+
+  return <SortableList listItems={latestData} getMoreData={getMoreData}></SortableList>;
+};
 
 export default StreamMonitor;
