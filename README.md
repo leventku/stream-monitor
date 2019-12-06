@@ -48,5 +48,7 @@ There's a button at the end of the page to load more data, which gets the `lastR
 ## TODO:
 - Add detail view to be shown on click on a transaction on the list.
 - Add a styled button for Load More button.
+- Add Prop types and type checking with Flow.
 - Completing snapshot tests for all components.
 - Adding unit tests without testing implementation details.
+- Add error notifications to UI instead of console errors.
