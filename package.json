@@ -1,11 +1,12 @@
 {
-  "name": "react-custom-boilerplate",
+  "name": "stream-monitor",
   "version": "0.0.1",
   "description": "Coding challenge",
   "main": "src/index.js",
   "scripts": {
     "test": "jest",
-    "start": "parcel pub/index.html"
+    "start": "parcel pub/index.html",
+    "start:server": "./bin/server-darwin-10.6-amd64"
   },
   "keywords": [],
   "author": "Levent Kucukgorkey <levent.kucukgorkey@gmail.com>",
