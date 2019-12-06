@@ -1,9 +1,27 @@
 import React, { useReducer, useContext, createContext } from 'react';
 
-import { SERVER_URL, PORT, TRANSACTIONS_API } from '../constants';
+import { SERVER_URL, PORT, TRANSACTIONS_API, statusHash } from '../constants';
 
 const StreamStateContext = createContext();
 const StreamDispatchContext = createContext();
+
+function sortList (array, sortOrder) {
+  let compareFunction;
+
+  if (sortOrder === 'date') {
+    compareFunction = (a, b) => new Date(a.fromDate) - new Date(b.fromDate);
+  }
+  if (sortOrder === 'status') {
+    compareFunction = (a, b) => {
+      return statusHash[a.status].order - statusHash[b.status].order;
+    };
+  }
+  if (!sortOrder) {
+    return array;
+  }
+
+  return array.sort(compareFunction);
+}
 
 function streamReducer (state, action) {
   switch (action.type) {
@@ -11,7 +29,9 @@ function streamReducer (state, action) {
       return { ...state, lastRevealedPage: state.lastRevealedPage + 1 };
     }
     case 'sortOrderChange': {
-      return { ...state, sortOrder: action.payload };
+      const sortOrder = action.payload;
+
+      return { ...state, sortOrder, latestData: sortList([...state.latestData], sortOrder) };
     }
     case 'start update': {
       return { ...state, dataLoading: true };
@@ -20,7 +40,10 @@ function streamReducer (state, action) {
       return { ...state, dataLoading: false };
     }
     case 'finish update': {
-      return { ...state, latestData: [...state.latestData, ...action.payload], dataLoading: false };
+      return {
+        ...state,
+        latestData: sortList([...state.latestData, ...action.payload], state.sortOrder),
+        dataLoading: false };
     }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
@@ -77,31 +100,9 @@ async function getWithPageNumber (dispatch, pageNumber) {
       dispatch({ type: 'pageIncrement' });
     }
   } catch (error) {
-    console.log('fail response');
+    console.log('fail response', error);
     dispatch({ type: 'fail update', error });
-
-    return Promise.reject(error);
   }
 }
-
-// async function getWithPageNumber(dispatch, pageNumber) {
-//     dispatch({type: 'start update'})
-//     return await fetch(`${SERVER_URL}:${PORT}/${API}/${pageNumber}`)
-//         .then((response) => {
-//             if (response.status >= 400 && response.status < 600) {
-//                 throw new Error("Bad response from server");
-//             }
-//             return response.json()
-//         })
-//         .then((returnedResponse) => {
-//             dispatch({type: 'finish update', payload: returnedResponse})
-//             // return returnedResponse
-//         })
-//         .catch((error) => {
-//             console.warn(error)
-//             dispatch({type: 'fail update', error})
-//             return Promise.reject(error)
-//         })
-// }
 
 export { StreamProvider, useStreamState, useStreamDispatch, getWithPageNumber };

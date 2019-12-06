@@ -49,28 +49,14 @@ const ItemStatus = styled.span`
 	}
 `;
 
-const SortableList = ({ listItems, getMoreData }) => {
-  const { sortOrder, lastRevealedPage, dataLoading } = useStreamState();
-  const sortedList = JSON.parse(JSON.stringify(listItems));
-
-  if (sortOrder === 'date') {
-    sortedList.sort((a, b) => new Date(a.fromDate) - new Date(b.fromDate));
-  }
-  if (sortOrder === 'status') {
-    sortedList.sort((a, b) => (
-      (statusHash[a.status].order < statusHash[b.status].order)
-        ? -1
-        : (statusHash[a.status].order > statusHash[b.status].order)
-          ? 1
-          : 0
-    ));
-  }
+const List = ({ listItems, getMoreData }) => {
+  const { lastRevealedPage, dataLoading } = useStreamState();
 
   return (
     <Wrapper>
       <ListHeader></ListHeader>
       <ListBody>
-        {sortedList.map(item =>
+        {listItems.map(item =>
           (<ListElement key={item.id}>
             <ItemId>#{item.id}</ItemId>
             <ItemDate>{new Date(item.fromDate).toLocaleString('en-GB', localeOptions)} ({(new Date(item.toDate) - new Date(item.fromDate)) / 3600 / 24 / 1000}d)</ItemDate>
@@ -89,4 +75,4 @@ const SortableList = ({ listItems, getMoreData }) => {
   );
 };
 
-export default SortableList;
+export default List;

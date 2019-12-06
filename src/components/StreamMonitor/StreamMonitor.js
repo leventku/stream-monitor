@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import SortableList from '../SortableList';
+import List from '../List';
 
 import { useStreamDispatch, useStreamState, getWithPageNumber } from '../../contexts/StreamContext';
 
@@ -13,7 +13,7 @@ const StreamMonitor = () => {
     getWithPageNumber(dispatch, 0);
   }, [dispatch]);
 
-  return <SortableList listItems={latestData} getMoreData={getMoreData}></SortableList>;
+  return <List listItems={latestData} getMoreData={getMoreData}></List>;
 };
 
 export default StreamMonitor;
